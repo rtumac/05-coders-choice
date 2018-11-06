@@ -1,20 +1,25 @@
-Name: ____________           ID:   ____________
+Name: Remus Tumac           ID:   46817892
 
 ## Proposed Project
 
-> Replace this paragraph with the description of what your project
-> will do. Tell me what kind of interface it will have, and roughly
-> how it will work. I don't need more than three or four sentences,
-> unless you feel compelled to write more.
+I will create a web application that will take in someone's birthday
+and it will send them reminders on their mathematical birthday. Some of
+these birthdays will be celebrating things like:
+<br>
+- Prime birthdays: a prime number of days since your birthday
+- 250 months, 500 months, 750 months since your birthday
+- 1,000 weeks, 2,000 weeks ...
+- 10,000 days, 20,000 days ...
+- 10,000 hours, 20,000 hours ...
+- 10,000,000 minutes, 20,000,000 minutes ...
+- 0.5 billion seconds, 1 billion seconds ...
+- Pi ^ Pi birthday: 36 years and 169 days
+
 
 ## Outline Structure
 
-> Describe how you'll organize your code. What is the process and
-> supervision structure? If it uses a framework, how does it fit in. I
-> just need to understand the direction you plan to take. Again, three
-> or four sentences are probably enough.
-
-
-
-> replace all the ">" lines with your content, then push this to
-> github and issue a merge request.
+I will split the code in multiple modules: a module to handle the user
+process, a module to send the notifications, modules to handle the user
+interface, module to supervise the user processes. I am planning to use the 
+phoenix framework. There will be a process for every user in the system.
+There will also be a supervisor over all the user processes.
