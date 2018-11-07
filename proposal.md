@@ -2,24 +2,27 @@ Name: Remus Tumac           ID:   46817892
 
 ## Proposed Project
 
-I will create a web application that will take in someone's birthday
-and it will send them reminders on their mathematical birthday. Some of
-these birthdays will be celebrating things like:
+My idea is based on the Six Degrees of Kevin Bacon game. I am planning 
+to construct a web application that allows users to search the degree
+of separation between two actors. I will use the IMDB API in order to
+get movies and its cast. I will use that data to construct a graph which
+will be displayed with the help of a phoenix web application.
 <br>
-- Prime birthdays: a prime number of days since your birthday
-- 250 months, 500 months, 750 months since your birthday
-- 1,000 weeks, 2,000 weeks ...
-- 10,000 days, 20,000 days ...
-- 10,000 hours, 20,000 hours ...
-- 10,000,000 minutes, 20,000,000 minutes ...
-- 0.5 billion seconds, 1 billion seconds ...
-- Pi ^ Pi birthday: 36 years and 169 days
+I will also implement an algorithm to search the most 'connected' node 
+in the graph. Essentially, I will try to answer the question is Kevin
+Bacon six degrees away from every actor? Also, is there any other actor
+that maybe is 5 degrees away from any other actor? Even after parallelization 
+and optimization, this sort of exhaustive search may be very computational 
+expensive. If sufficient computational power is not available, I will run
+the algorithm on a smaller graph.  
 
 
 ## Outline Structure
 
-I will split the code in multiple modules: a module to handle the user
-process, a module to send the notifications, modules to handle the user
-interface, module to supervise the user processes. I am planning to use the 
-phoenix framework. There will be a process for every user in the system.
-There will also be a supervisor over all the user processes.
+I will split the code in multiple modules: a module to search the shortest 
+path between two nodes, a module to search the most connected node in the
+graph, a module to interact with the IMDB API, and modules to handle the user
+interface. I am planning to use the phoenix framework. For the search algorithm
+there will be a supervisor process which will be in charge of creating new
+processes and delegating the work. The supervisor process would also be in
+charge of combining the results once the worker process finish executing.
