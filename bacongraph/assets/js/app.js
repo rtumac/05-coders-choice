@@ -13,6 +13,36 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 
+import vis from 'vis'
+
+(function () {
+  // provide data in the DOT language
+  var DOTstring = 'dinetwork {Malkovich -- Hoffman -- Bacon; \
+    Foster -- Hoffman -- Pollak -- Bacon \
+    Wilson -- Giallini -- Molinari -- Welker -- Bacon \
+    Bacon -- Stone -- Wilson -- Jaoui;}';
+
+  var parsedData = vis.network.convertDot(DOTstring);
+
+  var data = {
+    nodes: parsedData.nodes,
+    edges: parsedData.edges
+  }
+
+  var options = parsedData.options;
+
+  // you can extend the options like a normal JSON variable:
+  options.nodes = {
+    color: 'red'
+  }
+
+  // create a network
+  var network = new vis.Network(container, data, options);
+
+}());
+
+
+
 // Import local files
 //
 // Local files can be imported directly using relative
