@@ -20,7 +20,8 @@ import vis from 'vis'
   var DOTstring = 'dinetwork {Malkovich -- Hoffman -- Bacon; \
     Foster -- Hoffman -- Pollak -- Bacon \
     Wilson -- Giallini -- Molinari -- Welker -- Bacon \
-    Bacon -- Stone -- Wilson -- Jaoui;}';
+    Bacon -- Stone -- Wilson -- Jaoui}';
+
 
   var parsedData = vis.network.convertDot(DOTstring);
 
