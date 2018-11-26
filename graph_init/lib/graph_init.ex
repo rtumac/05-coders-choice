@@ -5,14 +5,8 @@ defmodule GraphInit do
 
   @doc """
   Hello world.
-
-  ## Examples
-
-      iex> GraphInit.hello()
-      :world
-
   """
-  def hello do
-    :world
-  end
+
+  defdelegate new_graph(), to: GraphInit.ParseGraph
+
 end

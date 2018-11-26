@@ -42,8 +42,6 @@ import vis from 'vis'
 
 }());
 
-
-
 // Import local files
 //
 // Local files can be imported directly using relative
