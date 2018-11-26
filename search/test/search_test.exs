@@ -2,7 +2,11 @@ defmodule SearchTest do
   use ExUnit.Case
   doctest Search
 
-  # test "greets the world" do
-  #   assert Search.hello() == :world
-  # end
+  test "search path to self" do
+    assert Search.get_shortest_path(:Bacon, :Bacon) == []
+  end
+
+  test "search path within 1 hop" do
+    assert Search.get_shortest_path(:Bacon, :Stone) == [:Bacon, :Stone]
+  end
 end

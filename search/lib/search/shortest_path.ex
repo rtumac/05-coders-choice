@@ -1,6 +1,6 @@
 defmodule Search.ShortestPath do
 
-  def get_shortest_path(node_1, node_2, graph \\ GraphInit.new_graph) do
+  def get_shortest_path(node_1, node_2, graph) do
     recursive_backtrack(node_1, node_2, graph, [node_1], [])
   end
 
