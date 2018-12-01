@@ -21,7 +21,8 @@ defmodule Search.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:graph_init, in_umbrella: true}
+      { :graph_init, in_umbrella: true },
+      { :iterator, in_umbrella: true }
     ]
   end
 end
