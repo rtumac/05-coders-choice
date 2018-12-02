@@ -2,7 +2,9 @@ defmodule Search.ShortestPath do
 
   def get_shortest_path(origin, destination, graph) do
     initialize_state(origin, destination, graph)
-      |> recursive_backtrack
+      |> recursive_backtrack()
+      |> Map.get(:shortest_path)
+      |> Enum.reverse()
   end
 
   defp initialize_state(origin, destination, graph) do
@@ -10,69 +12,89 @@ defmodule Search.ShortestPath do
       origin:        origin,
       destination:   destination,
       graph:         graph.adjacency_list,
-      current_path:  [ origin ],
-      shortest_path: []
+      current_path:  []
     }
   end
 
-  # exhausted all paths in the graph
-  defp recursive_backtrack(%{ current_path: [] } = state) do
-    state.shortest_path
+  # reached destination
+  defp recursive_backtrack(%{ origin: x, destination: x, shortest_path: _ } = state) do
+    if( length(state.current_path) + 1 <  length(state.shortest_path) ) do
+      state = state
+        |> Map.put(:shortest_path, [state.origin | state.current_path])
+        |> update_origin()
+
+      { :destination_reached, state }
+    else
+      { :destination_reached, state |> update_origin() }
+    end
   end
 
-  # reached destination
   defp recursive_backtrack(%{ origin: x, destination: x } = state) do
-    state =
-      state |> visit_node(state.origin)
+    state = state
+      |> Map.put(:shortest_path, [state.origin | state.current_path])
+      |> update_origin()
 
-    if( length(state.current_path) <  length(state.shortest_path) ) do
-      state
-        |> Map.put(:shortest_path, state.current_path)
-    end
-
-    state
+    {:destination_reached, state}
   end
 
   defp recursive_backtrack(state) do
-    state =
-      state |> visit_node(state.origin)
+    if(state |> visited?) do
+      state
+    else
+      { :ok, iterator } = Iterator.start(state.graph[ state.origin ])
 
-    { :ok, iterator } = Iterator.start(state.graph[ state.origin ])
+      state
+        |> visit_node(state.origin)
+        |> iterate_list(iterator)
+        |> update_current_path()
+        |> update_origin()
+    end
+  end
 
+  defp iterate_list({:destination_reached, state}, iterator) do
     state
-      |> iterate_list(iterator)
-
-
-    # check if node is in current_path
-
-
-
-
-    # recursive_backtrack(state)
-
-
-
-
-    # update current_path / shortest_path accordingly
-
-
+      |> handle_next(iterator, nil)
   end
 
   # iterate recursively over a list of nodes
   defp iterate_list(state, iterator) do
     next_node = iterator |> Iterator.next()
 
-    if (next_node) do
-      state
-        |> Map.put(:origin, next_node)
-        |> recursive_backtrack()
-        |> iterate_list(iterator)
-    end
+    state
+      |> handle_next(iterator, next_node)
+  end
+
+  defp handle_next(state, _iterator, nil) do
+    state
+  end
+
+  defp handle_next(state, iterator, next_node) do
+    state
+      |> Map.put(:origin, next_node)
+      |> recursive_backtrack()
+      |> iterate_list(iterator)
   end
 
   defp visit_node(state, node) do
     state
       |> Map.put(:current_path, [ node | state.current_path ])
+  end
+
+  defp visited?(state) do
+    state.current_path |>
+      Enum.find_value(&(&1 == state.origin))
+  end
+
+  defp update_current_path(state) do
+    { _, new_current_path } = state.current_path |> List.pop_at(0)
+
+    state
+      |> Map.put(:current_path, new_current_path)
+  end
+
+  defp update_origin(state) do
+    state
+      |> Map.put(:origin, state.current_path |> Enum.at(0))
   end
 
 end
