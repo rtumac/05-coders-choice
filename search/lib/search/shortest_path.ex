@@ -19,22 +19,18 @@ defmodule Search.ShortestPath do
   # reached destination
   defp recursive_backtrack(%{ origin: x, destination: x, shortest_path: _ } = state) do
     if( length(state.current_path) + 1 <  length(state.shortest_path) ) do
-      state = state
+      state
         |> Map.put(:shortest_path, [state.origin | state.current_path])
         |> update_origin()
-
-      { :destination_reached, state }
     else
-      { :destination_reached, state |> update_origin() }
+      state
     end
   end
 
   defp recursive_backtrack(%{ origin: x, destination: x } = state) do
-    state = state
+    state
       |> Map.put(:shortest_path, [state.origin | state.current_path])
       |> update_origin()
-
-    {:destination_reached, state}
   end
 
   defp recursive_backtrack(state) do
@@ -49,11 +45,6 @@ defmodule Search.ShortestPath do
         |> update_current_path()
         |> update_origin()
     end
-  end
-
-  defp iterate_list({:destination_reached, state}, iterator) do
-    state
-      |> handle_next(iterator, nil)
   end
 
   # iterate recursively over a list of nodes
