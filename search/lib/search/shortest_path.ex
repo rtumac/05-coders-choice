@@ -22,7 +22,7 @@ defmodule Search.ShortestPath do
     %{
       origin:          origin,
       destination:     destination,
-      graph:           graph.adjacency_list,
+      graph:           graph,
       current_path:    [],
       shortest_path:   [],
       shortest_length: 0
