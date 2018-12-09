@@ -12,6 +12,9 @@ defmodule Ui do
   #   :world
 
   """
+
+  defdelegate start(), to: Ui.Cli
+
   def hello do
     :world
   end
