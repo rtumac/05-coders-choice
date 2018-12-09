@@ -10,7 +10,6 @@ defmodule Ui.Cli do
       |> main_menu()
   end
 
-
   defp initialize_state() do
     %{
       graph: GraphInit.new_graph,
@@ -36,8 +35,7 @@ defmodule Ui.Cli do
         :ok
 
       _ ->
-        IO.ANSI.format([:red, "\nInvalid option. Please try again"], true)
-          |> IO.puts()
+        print_red("\nInvalid option. Please try again\n")
 
         state |> main_menu()
     end
@@ -65,8 +63,7 @@ defmodule Ui.Cli do
         processed_actor
 
       true ->
-        IO.ANSI.format([:yellow, "\nCould not find #{actor}. Please try again"], true)
-          |> IO.puts()
+        print_yellow("\nCould not find #{actor}. Please try again\n")
 
         get_one_actor(state, prompt)
     end
@@ -83,8 +80,8 @@ defmodule Ui.Cli do
   end
 
   defp print_path(%{ path: [] } = state, _) do
-    IO.ANSI.format([:yellow, "\nNo path has been found"], true)
-      |> IO.puts()
+    print_yellow("\nNo path has been found\n")
+
     state
   end
 
@@ -104,11 +101,13 @@ defmodule Ui.Cli do
 
   defp print_node([ head | tail ]) do
     IO.write(head)
-
-    IO.ANSI.format([:green, " -> "], true)
-      |> IO.write()
+    print_green(" -> ")
 
     print_node(tail)
+  end
+
+  defp get_selection() do
+    IO.gets(": ") |> String.trim()
   end
 
   defp print_menu_options() do
@@ -117,8 +116,19 @@ defmodule Ui.Cli do
     IO.puts("2. Quit")
   end
 
-  defp get_selection() do
-    IO.gets(": ") |> String.trim()
+  defp print_yellow(prompt) do
+    IO.ANSI.format([:yellow, prompt], true)
+      |> IO.write()
+  end
+
+  defp print_red(prompt) do
+    IO.ANSI.format([:red, prompt], true)
+      |> IO.write()
+  end
+
+  defp print_green(prompt) do
+    IO.ANSI.format([:green, prompt], true)
+      |> IO.write()
   end
 
 end
