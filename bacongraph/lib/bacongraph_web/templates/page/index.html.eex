@@ -1,9 +1,0 @@
-<style type="text/css">
-  #container {
-    max-width: 100vw;
-    height: 40vw;
-    margin: auto;
-  }
-</style>
-
-<div id="container"></div>
