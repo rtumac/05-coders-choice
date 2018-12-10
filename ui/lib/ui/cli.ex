@@ -123,7 +123,7 @@ defmodule Ui.Cli do
 
   defp print_menu_options() do
     IO.puts("\nBacon-o-Graph")
-    IO.puts("1. Search shortes path between two actors")
+    IO.puts("1. Search shortest path between two actors")
     IO.puts("2. Quit")
   end
 
