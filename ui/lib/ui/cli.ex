@@ -29,6 +29,7 @@ defmodule Ui.Cli do
           |> get_actors()
           |> get_shortest_path()
           |> print_path("Shortest path:\n")
+          |> print_bacon_number()
           |> main_menu()
 
       "2" ->
@@ -48,7 +49,7 @@ defmodule Ui.Cli do
     state
       |> Map.put(:origin, origin)
       |> Map.put(:destination, destination)
-    end
+  end
 
   defp get_one_actor(state, prompt) do
     actor = IO.gets(prompt)
@@ -95,8 +96,7 @@ defmodule Ui.Cli do
   end
 
   defp print_node([ head ]) do
-    IO.write(head)
-    IO.write("\n")
+    IO.puts(head)
   end
 
   defp print_node([ head | tail ]) do
@@ -104,6 +104,17 @@ defmodule Ui.Cli do
     print_green(" -> ")
 
     print_node(tail)
+  end
+
+  defp print_bacon_number(%{ path: [] } = state) do
+    state
+  end
+
+  defp print_bacon_number(state) do
+    bacon_number = length(state.path) - 1
+    IO.puts("\nYour Bacon number is: #{bacon_number}")
+
+    state
   end
 
   defp get_selection() do
