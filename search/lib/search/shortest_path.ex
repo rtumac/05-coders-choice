@@ -1,6 +1,31 @@
 defmodule Search.ShortestPath do
+  use GenServer
+
+  @me __MODULE__
+
+  #  API  #
+
+  def start_link(default \\ []) do
+    GenServer.start_link(__MODULE__, default, name: @me)
+  end
 
   def get_shortest_path(origin, destination, graph) do
+    GenServer.call(@me, { :search_shortest_path, origin, destination, graph })
+  end
+
+  #  Server Implementation  #
+
+  def init(args) do
+    { :ok, args }
+  end
+
+  def handle_call({:search_shortest_path, origin, destination, graph}, _from, _state) do
+    response = search_shortest_path(origin, destination, graph)
+
+    { :reply, response, :ok }
+  end
+
+  def search_shortest_path(origin, destination, graph) do
     graph
       |> initialize_state(origin, destination)
       |> recursive_backtrack()
